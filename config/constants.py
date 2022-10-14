@@ -1,0 +1,1 @@
+application_record_path = "/home/jorge/PycharmProjects/caixa_datathon_group3/data/application_record.csv"
