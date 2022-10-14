@@ -1,11 +1,11 @@
 import pandas as pd
-from config.constants import application_record_path, credit_score_path, application_record_clean_path
+from config.constants import application_record_path, credit_score_path, application_record_clean_path, application_record_filtered_path, df_model_path
 
 
 def cleanse_data(app: pd.DataFrame, cred: pd.DataFrame):
     _get_dummies(app)
     app = app.merge(_get_delayed(cred).reset_index(), on=['ID'], how='left')
-    pass
+    return app
 def score(label):
     score = {"1": 0.33, "2": 0.66, "3": 1, "4": 1, "5":1}
     try:
@@ -38,7 +38,7 @@ def _get_dummies(df: pd.DataFrame):
 
 
 if __name__ == '__main__':
-    app = pd.read_csv(application_record_path)
+    app = pd.read_csv(application_record_filtered_path)
     cred = pd.read_csv(credit_score_path)
-    cleanse_data(app, cred)
-    app.to_csv(application_record_clean_path)
+    app = cleanse_data(app, cred)
+    app.to_csv(df_model_path)
